@@ -24,7 +24,7 @@ pipeline{
                 }
             }
         }
-        stage('Test'){
+        stage('Unit and Integration Tests'){
             steps{
                 echo "==========Executing Test=========="
                 echo "Unit test"
@@ -42,24 +42,41 @@ pipeline{
                 }
             }
         }
-        stage('Code Quality Check'){
+        stage('Code Analysis'){
             steps{
-                echo "==========Executing CQC=========="
-                echo "Check the quality of the code"
+                echo "==========Executing Code Analysis=========="
+                echo "Check the quality of the code at $DIRECTORY_PATH"
             }
             post{
                 always{
                     echo "Result"
                 }
                 success{
-                    echo "++++++++++Executed CQC Successfully++++++++++"
+                    echo "++++++++++Executed Code Analysis Successfully++++++++++"
                 }
                 failure{
-                    echo "----------CQC Failed----------"
+                    echo "----------Code Analysis Failed----------"
                 }
             }
         }
-        stage('Deploy'){
+        stage('Security Scan'){
+            steps{
+                echo "==========Executing Security Scan=========="
+                echo "Scan the code for security concerns"
+            }
+            post{
+                always{
+                    echo "Result"
+                }
+                success{
+                    echo "++++++++++Executed Security Scan Successfully++++++++++"
+                }
+                failure{
+                    echo "----------Security Scan Failed----------"
+                }
+            }
+        }
+        stage('Deploy to Staging'){
             steps{
                 echo "==========Executing Deploy=========="
                 echo "Deploy the application to a testing environment specified by the environment variable: $TESTING_ENVIRONMENT"
@@ -76,9 +93,9 @@ pipeline{
                 }
             }
         }
-        stage('Approval'){
+        stage('Integration Test on Staging'){
             steps{
-                echo "==========Executing Approval=========="
+                echo "==========Executing Integration Test on Staging=========="
                 timeout(time:12, unit: 'SECONDS'){
                     sleep 10
                 }
@@ -88,10 +105,10 @@ pipeline{
                     echo "Result"
                 }
                 success{
-                    echo "++++++++++Executed Approval Successfully++++++++++"
+                    echo "++++++++++Executed Integration Test on Staging Successfully++++++++++"
                 }
                 failure{
-                    echo "----------Approval Failed----------"
+                    echo "----------Integration Test on Staging Failed----------"
                 }
             }
         }
@@ -113,4 +130,5 @@ pipeline{
             }
         }
     }
+
 }
