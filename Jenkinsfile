@@ -129,28 +129,10 @@ pipeline{
                 }
             }
         }
-        stage('Random try'){
-            steps{
-                echo "==========test=========="
-                timeout(time:12, unit: 'SECONDS'){
-                    sleep 10
-                }
-            }
-            post{
-                always{
-                    echo "Result"
-                }
-                success{
-                    echo "++++++++++++++++++++"
-                }
-                failure{
-                    echo "--------------------"
-                }
-            }
-        }
     }
 
 }
+
 
 
 
