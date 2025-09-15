@@ -5,7 +5,7 @@ pipeline{
         TESTING_ENVIRONMENT = "Jenkins"
         PRODUCTION_ENVIRONMENT = "jenkins 6.1 pipeline"
     }
-    stages{  //stage 1
+    stages{ 
         stage('Build'){
             steps{
                 echo "==========Executing Build=========="
@@ -132,4 +132,5 @@ pipeline{
     }
 
 }
+
 
